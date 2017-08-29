@@ -10,6 +10,8 @@ var sudo = require('sudo-prompt');
 var _ = require('lodash')
 var async = require('async')
 var portfinder = require('portfinder')
+const osProxy = require('os-proxy');
+
 const Components = exports.components = {
 
 };
@@ -78,6 +80,15 @@ Bus.on('Connect', async function(port){
         var cmd = './node_modules/.bin/hpts -s 127.0.0.1:' + port + ' -p ' + httpProxtPort;
         sudo.exec(cmd, {name: 'HTTP Auth'})
         console.log('http-cmd: ', cmd)
+
+        osProxy.set({
+            // Proxy configuration.
+            hostname : '127.0.0.1',
+            port     : httpProxtPort
+        })
+        .then(() => {
+                console.log('Proxy onfiguration has finished saving.');
+            });
     }
     else if (process.platform == 'darwin') {
         spawn('/Library/Application Support/SSClient/proxy_conf_helper', ['--mode', 'global', '--port', global.currentPort]);
