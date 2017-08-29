@@ -15,8 +15,7 @@ const Components = exports.components = {
 
 };
 
-var osProxy = require('os-proxy');
-
+var osProxy = require('global-proxy')
 
 function platformInitialize() {
     let platform = process.platform;
@@ -72,6 +71,15 @@ Bus.on('Disconnect', function(){
         if (process.platform == 'darwin') {
             spawn('/Library/Application Support/SSClient/proxy_conf_helper', ['--mode', 'off', '--port', global.currentPort]);
         }
+        else if (process.platform == 'win32') {
+            osProxy.disable()
+                .then((stdout) => {
+                    console.log(stdout);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
     }
 });
 
@@ -83,13 +91,13 @@ Bus.on('Connect', async function(port){
         sudo.exec(cmd, {name: 'HTTP Auth'})
         console.log('http-cmd: ', cmd)
 
-        osProxy.set({
-            // Proxy configuration.
-            hostname : '127.0.0.1',
-            port     : httpProxtPort
-        })
-        .then(() => {
-                console.log('Proxy onfiguration has finished saving.');
+
+        osProxy.enable('127.0.0.1', httpProxtPort, 'http')
+            .then((stdout) => {
+                console.log(stdout);
+            })
+            .catch((error) => {
+                console.log(error);
             });
     }
     else if (process.platform == 'darwin') {

@@ -16,6 +16,7 @@
     "cron": "^1.2.1",
     "flag-icon-css": "^2.8.0",
     "get-port": "^3.2.0",
+    "global-proxy": "0.0.3",
     "hex": "^0.1.0",
     "http-proxy-to-socks": "^1.0.2",
     "jsonwebtoken": "^7.4.1",
