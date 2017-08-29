@@ -51,7 +51,7 @@ if (global.defaultManager) {
     exports.default = global.defaultManager
 }
 else {
-    var defaultManager = new manager('http://127.0.0.1:3000')
+    var defaultManager = new manager('http://api.zaocan84.com:3000')//'http://127.0.0.1:3000')
     exports.default = defaultManager
     global.defaultManager = defaultManager
 }
