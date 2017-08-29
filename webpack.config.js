@@ -11,6 +11,7 @@ module.exports = {
         library: 'MLib'
     },
     module: {
+        noParse: /node_modules\/os-proxy\/index\.js/,
         loaders: [
             {
                 test: /\.jsx|js?$/,

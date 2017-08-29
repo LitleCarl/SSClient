@@ -8,13 +8,15 @@ var util  = require('util'), spawn = require('child_process').spawn;
 const EventEmitter = require('events');
 var sudo = require('sudo-prompt');
 var _ = require('lodash')
-var async = require('async')
-var portfinder = require('portfinder')
-const osProxy = require('os-proxy');
+var async = require('async');
+var portfinder = require('portfinder');
 
 const Components = exports.components = {
 
 };
+
+var osProxy = require('os-proxy');
+
 
 function platformInitialize() {
     let platform = process.platform;
