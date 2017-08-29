@@ -15,7 +15,7 @@ const Components = exports.components = {
 
 };
 
-var osProxy = require('global-proxy')
+var osProxy = require('../common/proxyHelperForWin')
 
 function platformInitialize() {
     let platform = process.platform;
