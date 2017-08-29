@@ -65,19 +65,22 @@ const Bus = global.CommonEventBus = new EventEmitter();
 Bus.on('Disconnect', function(){
     if (global.currentPort) {
         process.stdout.write('ON Disconnect');
-        spawn('/Library/Application Support/SSClient/proxy_conf_helper', ['--mode', 'off', '--port', global.currentPort]);
+        if (process.platform == 'darwin') {
+            spawn('/Library/Application Support/SSClient/proxy_conf_helper', ['--mode', 'off', '--port', global.currentPort]);
+        }
     }
 });
 
 Bus.on('Connect', async function(port){
     process.stdout.write('ON Connect');
-    spawn('/Library/Application Support/SSClient/proxy_conf_helper', ['--mode', 'global', '--port', global.currentPort]);
-
     if (process.platform == 'win32') {
         let httpProxtPort = await portfinder.getPortPromise();
-        var cmd = './node_modules/.bin/hpts -s 127.0.0.1:' + httpProxtPort + ' -p ' + port;
+        var cmd = './node_modules/.bin/hpts -s 127.0.0.1:' + port + ' -p ' + httpProxtPort;
         sudo.exec(cmd, {name: 'HTTP Auth'})
         console.log('http-cmd: ', cmd)
+    }
+    else if (process.platform == 'darwin') {
+        spawn('/Library/Application Support/SSClient/proxy_conf_helper', ['--mode', 'global', '--port', global.currentPort]);
     }
 });
 
