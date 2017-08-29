@@ -1,4 +1,5 @@
 var path = require('path');
+var nodeExternals = require('webpack-node-externals');
 
 module.exports = {
     entry: {
@@ -20,6 +21,10 @@ module.exports = {
                 }
             }
         ]
+    },
+    externals: [nodeExternals()],
+    resolve: {
+        extensions: ['.js', '.jsx', '.node']
     },
     target: 'node-webkit',
     node: {

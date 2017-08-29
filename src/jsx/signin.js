@@ -1,21 +1,52 @@
 var React = require('react');
-var _ = require('lodash')
+var _ = require('lodash');
+var portfinder = require('portfinder');
+var HTTPManager = require('../../common/HTTPRequestManager.js').default;
+const SharedContext = require('../../common/SharedContext.js')
 module.exports = class LoginForm extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            email: "dd",
-            password: ''
+            email: "cjx5813@foxmail.com",
+            password: '58133240'
         }
     }
 
-    requestSignIn() {
+    async requestSignIn() {
+        let data = await HTTPManager.request('/api/users/signin', 'post', {email: this.state.email, password: this.state.password})
+        console.log('data:', data)
+
+        if (data['code'] == 1) {
+            HTTPManager.middleware = ()=>{
+                return {'x-token': data['data']['token']}
+            };
+
+            global.SharedInfo = {user: data['data']['user']};
+            var gui = require('nw.gui');
+            gui.Window.open('profile.html', {}, function (new_win) {
+                // do something with the newly created window
+            });
+        }
+
+        //var util  = require('util'), spawn = require('child_process').spawn;
+        //let port = await portfinder.getPortPromise();
+        //console.log('port at:' , port)
+        ////var s = require('../../lib/shadowsocks/local').createServer('150.95.147.125', 50000, port, '58133240', 'aes-256-cfb', 600000, '127.0.0.1')
+        //var s = require('../../lib/shadowsocks/local').createServer('127.0.0.1', 8222, port, '58133240', 'aes-256-cfb', 600000, '127.0.0.1')
+        //s.on("error", function(e) {
+        //    console.log('sslocal exit:', e);
+        //    return process.stdout.on('drain', function() {
+        //        return process.exit(1);
+        //    });
+        //});
+
+        //var command = spawn('/Library/Application Support/SSClient/proxy_conf_helper', ['--mode', 'global', '--port', port]);
+
     }
     render() {
         var self = this;
         return (
             <div>
-
                 <section className="hero is-medium">
                     <div className="hero-body">
                         <div className="container has-text-centered" >
@@ -55,7 +86,7 @@ module.exports = class LoginForm extends React.Component {
                                         <div className="field has-text-centered" style={{'marginTop': 20}}>
                                             <div className="level">
                                                 <div className="level-left">
-                                                    <button className="button is-primary">登录</button>
+                                                    <button className="button is-primary" onClick={self.requestSignIn.bind(self)}>登录</button>
                                                 </div>
                                                 <div className="level-right">
                                                     <button className="button" >注册</button>

@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "index.html",
   "scripts": {
-    "serve": "webpack-dev-server"
+    "serve": "webpack-dev-server --port 8081"
   },
   "dependencies": {
     "async": "^2.5.0",
@@ -12,19 +12,27 @@
     "babel-preset-stage-3": "^6.17.0",
     "babel-runtime": "^6.18.0",
     "bluebird": "^3.4.6",
+    "country-list": "^1.1.0",
     "cron": "^1.2.1",
     "flag-icon-css": "^2.8.0",
+    "get-port": "^3.2.0",
+    "hex": "^0.1.0",
     "jsonwebtoken": "^7.4.1",
     "lodash": "^4.16.4",
     "log4js": "^2.0.1",
+    "lz4": "^0.5.3",
     "moment": "^2.18.1",
     "morgan": "^1.8.2",
+    "portfinder": "^1.0.13",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-transition-group": "^1.2.0",
+    "request": "^2.81.0",
     "sequelize": "^4.2.1",
     "serve-favicon": "^2.4.3",
-    "sudo-prompt": "^7.1.1"
+    "sudo-prompt": "^7.1.1",
+    "to-buffer": "^1.1.0",
+    "webpack-node-externals": "^1.6.0"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
